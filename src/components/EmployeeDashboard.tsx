@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Plus } from 'lucide-react';
+import { Plus, BarChart3 } from 'lucide-react';
 import ChatbotWidget from './ChatbotWidget';
 import TicketList from './TicketList';
 import NotificationToast from './NotificationToast';
 import CreateTicketModal from './CreateTicketModal';
+import AnalyticsModal from './AnalyticsModal';
 import { Ticket } from '../types';
 
 const mockUserTickets: Ticket[] = [
@@ -48,6 +49,7 @@ const mockUserTickets: Ticket[] = [
 function EmployeeDashboard() {
   const [showNotification, setShowNotification] = useState(true);
   const [isCreateTicketOpen, setIsCreateTicketOpen] = useState(false);
+  const [isAnalyticsOpen, setIsAnalyticsOpen] = useState(false);
   const [tickets, setTickets] = useState(mockUserTickets);
 
   const handleCreateTicket = (ticketData: { subject: string; description: string; priority: string }) => {
@@ -75,19 +77,28 @@ function EmployeeDashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Header with Raise Ticket Button */}
+      {/* Header with Buttons */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Employee Dashboard</h1>
           <p className="text-gray-600">Manage your support tickets and get help</p>
         </div>
-        <button
-          onClick={() => setIsCreateTicketOpen(true)}
-          className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors shadow-sm"
-        >
-          <Plus className="w-5 h-5 mr-2" />
-          Raise New Ticket
-        </button>
+        <div className="flex items-center space-x-3">
+          <button
+            onClick={() => setIsAnalyticsOpen(true)}
+            className="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 bg-white rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors shadow-sm"
+          >
+            <BarChart3 className="w-5 h-5 mr-2" />
+            Analytics
+          </button>
+          <button
+            onClick={() => setIsCreateTicketOpen(true)}
+            className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors shadow-sm"
+          >
+            <Plus className="w-5 h-5 mr-2" />
+            Raise New Ticket
+          </button>
+        </div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Chatbot Widget */}
@@ -109,6 +120,13 @@ function EmployeeDashboard() {
         isOpen={isCreateTicketOpen}
         onClose={() => setIsCreateTicketOpen(false)}
         onSubmit={handleCreateTicket}
+      />
+
+      {/* Analytics Modal */}
+      <AnalyticsModal
+        isOpen={isAnalyticsOpen}
+        onClose={() => setIsAnalyticsOpen(false)}
+        tickets={tickets}
       />
 
       {/* Notification Toast */}
