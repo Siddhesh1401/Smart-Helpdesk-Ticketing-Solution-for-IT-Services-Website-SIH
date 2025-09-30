@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Search, Filter, AlertTriangle, Settings, BarChart3, MessageCircle } from 'lucide-react';
+import { Search, Filter, AlertTriangle, Settings, BarChart3 } from 'lucide-react';
 import TicketList from './TicketList';
 import TicketDetailPanel from './TicketDetailPanel';
+import AnalyticsModal from './AnalyticsModal';
 import { Ticket } from '../types';
 
 const mockITTickets: Ticket[] = [
@@ -60,6 +61,7 @@ const mockITTickets: Ticket[] = [
 
 function ITDashboard() {
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(mockITTickets[0]);
+  const [isAnalyticsOpen, setIsAnalyticsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterSource, setFilterSource] = useState('all');
   const [filterPriority, setFilterPriority] = useState('all');
@@ -84,13 +86,12 @@ function ITDashboard() {
           <p className="text-gray-600">Manage and resolve support tickets efficiently</p>
         </div>
         <div className="flex items-center space-x-3">
-          <button className="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 bg-white rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors shadow-sm">
+          <button 
+            onClick={() => setIsAnalyticsOpen(true)}
+            className="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 bg-white rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors shadow-sm"
+          >
             <BarChart3 className="w-5 h-5 mr-2" />
             Analytics
-          </button>
-          <button className="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 bg-white rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors shadow-sm">
-            <MessageCircle className="w-5 h-5 mr-2" />
-            Dashboard
           </button>
           <button className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors shadow-sm">
             <Settings className="w-5 h-5 mr-2" />
@@ -192,6 +193,13 @@ function ITDashboard() {
         {selectedTicket && <TicketDetailPanel ticket={selectedTicket} />}
       </div>
       </div>
+
+      {/* Analytics Modal */}
+      <AnalyticsModal
+        isOpen={isAnalyticsOpen}
+        onClose={() => setIsAnalyticsOpen(false)}
+        tickets={mockITTickets}
+      />
     </div>
   );
 }
