@@ -133,7 +133,7 @@ function App() {
 
   const tabs = [
     { id: 'dashboard' as const, label: 'Dashboard', icon: MessageCircle },
-    ...(currentUser.role === 'admin' || currentUser.role === 'it-agent' ? [
+    ...(currentUser.role === 'admin' ? [
       { id: 'reports' as const, label: 'Analytics', icon: BarChart3 }
     ] : []),
     ...(currentUser.role === 'admin' ? [
