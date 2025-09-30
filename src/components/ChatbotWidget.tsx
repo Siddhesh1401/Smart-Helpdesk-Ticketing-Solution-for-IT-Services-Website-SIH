@@ -146,26 +146,26 @@ function ChatbotWidget() {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6 h-80 sm:h-96 flex flex-col">
-      <div className="flex items-center space-x-2 sm:space-x-3 mb-3 sm:mb-4">
-        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary rounded-lg flex items-center justify-center">
-          <Bot className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 h-96 flex flex-col">
+      <div className="flex items-center space-x-3 mb-4">
+        <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+          <Bot className="w-6 h-6 text-white" />
         </div>
         <div>
-          <h2 className="text-lg sm:text-xl font-semibold text-gray-900">HelpBot</h2>
-          <p className="text-xs sm:text-sm text-gray-600">AI-powered support assistant</p>
+          <h2 className="text-xl font-semibold text-gray-900">HelpBot</h2>
+          <p className="text-sm text-gray-600">AI-powered support assistant</p>
         </div>
       </div>
 
       {/* Chat Messages */}
-      <div className="flex-1 overflow-y-auto space-y-3 sm:space-y-4 mb-3 sm:mb-4">
+      <div className="flex-1 overflow-y-auto space-y-4 mb-4">
         {messages.map((msg) => (
           <div
             key={msg.id}
             className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             <div
-              className={`max-w-[85%] sm:max-w-xs lg:max-w-md px-3 sm:px-4 py-2 rounded-lg ${
+              className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
                 msg.sender === 'user'
                   ? 'bg-primary text-white'
                   : 'bg-gray-100 text-gray-900'
@@ -227,18 +227,18 @@ function ChatbotWidget() {
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3 sm:mb-4">
+      <div className="grid grid-cols-3 gap-2 mb-4">
         {quickActions.map((action) => {
           const Icon = action.icon;
           return (
             <button
               key={action.label}
               onClick={() => handleQuickAction(action)}
-              className="flex items-center justify-center sm:justify-start space-x-2 px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors text-sm min-h-[44px] sm:min-h-[auto]"
+              className="flex items-center space-x-2 px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors text-sm"
               disabled={isTyping}
             >
               <Icon className="w-4 h-4 text-gray-600" />
-              <span className="text-gray-700 text-xs sm:text-sm">{action.label}</span>
+              <span className="text-gray-700 text-xs">{action.label}</span>
             </button>
           );
         })}
@@ -253,12 +253,12 @@ function ChatbotWidget() {
           onKeyPress={(e) => e.key === 'Enter' && handleSend()}
           placeholder="Describe your technical issue..."
           disabled={isTyping}
-          className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-sm sm:text-base disabled:opacity-50 min-h-[48px] sm:min-h-[auto]"
+          className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary text-sm disabled:opacity-50"
         />
         <button
           onClick={handleSend}
           disabled={isTyping || !message.trim()}
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-primary hover:text-primary-dark transition-colors disabled:opacity-50 min-w-[44px] min-h-[44px] flex items-center justify-center"
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-primary hover:text-primary-dark transition-colors disabled:opacity-50"
         >
           <Send className="w-4 h-4" />
         </button>

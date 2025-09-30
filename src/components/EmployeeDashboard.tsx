@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { Plus } from 'lucide-react';
 import ChatbotWidget from './ChatbotWidget';
 import TicketList from './TicketList';
 import NotificationToast from './NotificationToast';
+import CreateTicketModal from './CreateTicketModal';
 import { Ticket } from '../types';
 
 const mockUserTickets: Ticket[] = [
@@ -45,9 +47,48 @@ const mockUserTickets: Ticket[] = [
 
 function EmployeeDashboard() {
   const [showNotification, setShowNotification] = useState(true);
+  const [isCreateTicketOpen, setIsCreateTicketOpen] = useState(false);
+  const [tickets, setTickets] = useState(mockUserTickets);
+
+  const handleCreateTicket = (ticketData: { subject: string; description: string; priority: string }) => {
+    const newTicket: Ticket = {
+      id: `TCK-2025-${Math.floor(Math.random() * 9000) + 1000}`,
+      subject: ticketData.subject,
+      description: ticketData.description,
+      priority: ticketData.priority as 'low' | 'medium' | 'high' | 'critical',
+      status: 'open',
+      source: 'email',
+      employeeName: 'John Doe',
+      confidence: 0.95,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+
+    setTickets(prev => [newTicket, ...prev]);
+    setShowNotification(false);
+    
+    // Show success notification
+    setTimeout(() => {
+      setShowNotification(true);
+    }, 100);
+  };
 
   return (
     <div className="space-y-6">
+      {/* Header with Raise Ticket Button */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Employee Dashboard</h1>
+          <p className="text-gray-600">Manage your support tickets and get help</p>
+        </div>
+        <button
+          onClick={() => setIsCreateTicketOpen(true)}
+          className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors shadow-sm"
+        >
+          <Plus className="w-5 h-5 mr-2" />
+          Raise New Ticket
+        </button>
+      </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Chatbot Widget */}
         <div className="lg:col-span-1">
@@ -58,16 +99,26 @@ function EmployeeDashboard() {
         <div className="lg:col-span-1">
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">My Tickets</h2>
-            <TicketList tickets={mockUserTickets} compact={true} />
+            <TicketList tickets={tickets} compact={true} />
           </div>
         </div>
       </div>
+
+      {/* Create Ticket Modal */}
+      <CreateTicketModal
+        isOpen={isCreateTicketOpen}
+        onClose={() => setIsCreateTicketOpen(false)}
+        onSubmit={handleCreateTicket}
+      />
 
       {/* Notification Toast */}
       {showNotification && (
         <NotificationToast
           type="success"
-          message="Ticket TCK-2025-1010 auto-resolved with KB #123"
+          message={tickets.length > mockUserTickets.length ? 
+            `New ticket ${tickets[0].id} has been created successfully!` : 
+            "Ticket TCK-2025-1010 auto-resolved with KB #123"
+          }
           onClose={() => setShowNotification(false)}
         />
       )}
