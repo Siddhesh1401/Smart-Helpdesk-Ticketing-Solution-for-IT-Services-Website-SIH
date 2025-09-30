@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Filter, AlertTriangle, BarChart3, Settings } from 'lucide-react';
+import { Search, Filter, AlertTriangle, Settings } from 'lucide-react';
 import TicketList from './TicketList';
 import TicketDetailPanel from './TicketDetailPanel';
 import { Ticket } from '../types';
