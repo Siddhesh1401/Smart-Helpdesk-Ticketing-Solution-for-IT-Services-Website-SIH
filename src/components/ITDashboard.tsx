@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Filter, AlertTriangle } from 'lucide-react';
+import { Search, Filter, AlertTriangle, BarChart3, Settings } from 'lucide-react';
 import TicketList from './TicketList';
 import TicketDetailPanel from './TicketDetailPanel';
 import { Ticket } from '../types';
@@ -76,7 +76,22 @@ function ITDashboard() {
   });
 
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+    <div className="space-y-6">
+      {/* Header with Buttons */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">IT Support Dashboard</h1>
+          <p className="text-gray-600">Manage and resolve support tickets efficiently</p>
+        </div>
+        <div className="flex items-center space-x-3">
+          <button className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors shadow-sm">
+            <Settings className="w-5 h-5 mr-2" />
+            Settings
+          </button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
       {/* Left Panel - Filters and Queue */}
       <div className="xl:col-span-2 space-y-4">
         {/* Filters */}
@@ -167,6 +182,7 @@ function ITDashboard() {
       {/* Right Panel - Ticket Detail */}
       <div className="xl:col-span-1">
         {selectedTicket && <TicketDetailPanel ticket={selectedTicket} />}
+      </div>
       </div>
     </div>
   );

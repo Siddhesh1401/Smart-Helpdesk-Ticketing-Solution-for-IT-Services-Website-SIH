@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CreditCard as Edit, Trash2, Plus, TrendingUp } from 'lucide-react';
+import { CreditCard as Edit, Trash2, Plus, TrendingUp, BarChart3, Settings, MessageCircle, Mail } from 'lucide-react';
 import SourcesWidget from './SourcesWidget';
 import MonitoringCard from './MonitoringCard';
 import KBModal from './KBModal';
@@ -59,6 +59,24 @@ function AdminDashboard() {
 
   return (
     <div className="space-y-6">
+      {/* Header with Buttons */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">System Admin Dashboard</h1>
+          <p className="text-gray-600">Monitor system performance and manage knowledge base</p>
+        </div>
+        <div className="flex items-center space-x-3">
+          <button className="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 bg-white rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors shadow-sm">
+            <BarChart3 className="w-5 h-5 mr-2" />
+            Analytics
+          </button>
+          <button className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors shadow-sm">
+            <Settings className="w-5 h-5 mr-2" />
+            Admin Settings
+          </button>
+        </div>
+      </div>
+
       {/* Top Row - Sources */}
       <SourcesWidget />
 
